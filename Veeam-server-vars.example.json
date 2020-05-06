@@ -1,0 +1,7 @@
+{
+    "builder_userprofile" : "{{env `USERPROFILE`}}",
+    "template_name"       : "Veeam-v10-Veeam-server",
+    "os_hostname"         : "veeam-server",
+    "os_username"         : "foo",
+    "os_password"         : "bar"
+}

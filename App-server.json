@@ -1,0 +1,40 @@
+{
+    "builders": [
+      {
+        "type"              : "vmware-iso",
+        "iso_url"           : "{{user `builder_userprofile`}}/Downloads/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso",
+        "iso_checksum_type" : "none",
+        "cpus"              : 2,
+        "memory"            : 2048,
+        "version"           : 10,
+        "guest_os_type"     : "windows9srv-64",
+        "disk_adapter_type" : "lsisas1068",
+        "vm_name"           : "{{user `template_name`}}",
+        "vmdk_name"         : "{{user `template_name`}}",
+        "communicator"      : "winrm",
+        "winrm_username"    : "{{user `os_username`}}",
+        "winrm_password"    : "{{user `os_password`}}",
+        "winrm_use_ssl"     : true,
+        "winrm_insecure"    : true,
+        "winrm_timeout"     : "4h",
+        "shutdown_command"  : "shutdown /s /t 5 /f /d p:4:1 /c \"Packer Shutdown\"",
+        "shutdown_timeout"  : "30m",
+        "skip_compaction"   : true,
+        "output_directory"  : "{{user `builder_userprofile`}}/Documents/Virtual Machines/{{user `template_name`}}",
+        "headless"          : false,
+        "floppy_files": [
+          "{{template_dir}}/setup/vmware-tools.ps1",
+          "{{template_dir}}/setup/app-server"
+        ]
+      }
+  ],
+
+    "provisioners": [
+      {
+        "type": "powershell",
+        "only": ["vmware-iso"],
+        "scripts": ["setup/vmware-tools.ps1"],
+        "pause_before": "1m"
+      }
+  ]
+}
