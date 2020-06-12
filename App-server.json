@@ -2,7 +2,7 @@
     "builders": [
       {
         "type"              : "vmware-iso",
-        "iso_url"           : "{{user `builder_userprofile`}}/Downloads/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso",
+        "iso_url"           : "{{user `template_source`}}",
         "iso_checksum_type" : "none",
         "cpus"              : 2,
         "memory"            : 2048,
@@ -20,7 +20,8 @@
         "shutdown_command"  : "shutdown /s /t 5 /f /d p:4:1 /c \"Packer Shutdown\"",
         "shutdown_timeout"  : "30m",
         "skip_compaction"   : true,
-        "output_directory"  : "{{user `builder_userprofile`}}/Documents/Virtual Machines/{{user `template_name`}}",
+        
+        "output_directory"  : "{{user `template_outputdir`}}",
         "headless"          : false,
         "floppy_files": [
           "{{template_dir}}/setup/vmware-tools.ps1",

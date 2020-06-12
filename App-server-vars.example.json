@@ -1,6 +1,7 @@
 {
-    "builder_userprofile" : "{{env `USERPROFILE`}}",
     "template_name"       : "Veeam-v10-App-server",
+    "template_source"     : "{{env `USERPROFILE`}}/Downloads/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso",
+    "template_outputdir"  : "{{env `USERPROFILE`}}/Documents/Virtual Machines/{{user `template_name`}}",
     "os_hostname"         : "app-server",
     "os_username"         : "foo",
     "os_password"         : "bar"

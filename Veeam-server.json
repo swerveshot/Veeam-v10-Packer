@@ -2,7 +2,7 @@
     "builders": [
       {
         "type"              : "vmware-iso",
-        "iso_url"           : "{{user `builder_userprofile`}}/Downloads/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso",
+        "iso_url"           : "{{user `template_source`}}",
         "iso_checksum_type" : "none",
         "cpus"              : 2,
         "memory"            : 2048,
@@ -22,10 +22,10 @@
         "skip_compaction"   : true,
         "vmx_data": {
           "ide0:1.deviceType": "cdrom-image",
-          "ide0:1.fileName": "{{user `builder_userprofile`}}/Downloads/VeeamBackup&Replication_10.0.0.4461_20200401.iso",
+          "ide0:1.fileName": "{{user `template_appsource`}}",
           "ide0:1.present": "TRUE"
         },
-        "output_directory"  : "{{user `builder_userprofile`}}/Documents/Virtual Machines/{{user `template_name`}}",
+        "output_directory"  : "{{user `template_outputdir`}}",
         "headless"          : false,
         "floppy_files": [
           "{{template_dir}}/setup/vmware-tools.ps1",
