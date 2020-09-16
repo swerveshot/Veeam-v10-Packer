@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+name: Validate Packer Template
+
+# Trigger the workflow on push to all but the master branch
+# and trigger on pull request to master
+on: 
+  push:
+    branches-ignore: master
+    # Only run workflow when JSON or YAML files are changed
+    paths:
+      # Run on any changes to the workflows directory and json files
+      - '.github/workflows/**'
+      - '**.json'
+  pull_request:
+    branches: master
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "validate"
+  validate:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Run Packer with verbose logging
+    env:
+      PACKER_LOG: 1
+    strategy:
+      matrix:
+        template: ["App-server.json", "Veeam-server.json"]
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Run Packer Container - Validate Template ${{ matrix.template }}
+      # pull official hashicorp packer container for docker hub
+      uses: docker://hashicorp/packer:1.5.6
+      with:
+        # For some reason user variables passed as argument work fine enclosed in single quotes when using a self-hosted container
+        # On a GitHub shared container the workflow only completes succesfully when the quotes are removed
+        args: "validate -var os_username=foo -var template_source=bar /github/workspace/${{ matrix.template }}"
